@@ -1,4 +1,4 @@
-body {
+/*body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -6,6 +6,17 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+}*/
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0px;
+    background-color: #f0f0f0;
+    flex-wrap: wrap;
 }
 
 .container {
