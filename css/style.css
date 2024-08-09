@@ -69,9 +69,16 @@ img {
     margin: 0 0 10px 10px;
 }
 
-.game {
+/*.game {
     display: table;
     justify-content: space-between;
+}*/
+
+.game {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .game-link {
