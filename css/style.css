@@ -76,7 +76,7 @@ img {
 
 .game-link {
     display: inline-block; /* Добавьте display, чтобы элемент был видимым */
-    height: 50px; /* Добавьте высоту */
+    height: 0px; /* Добавьте высоту */
     transition: transform 0.3s ease-in-out;
 }
 
