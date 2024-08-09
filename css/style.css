@@ -65,6 +65,10 @@ p {
     text-align: right;
 }
 
+img {
+    margin: 0 5px 0 5px;
+}
+
 .game {
     display: table;
     justify-content: space-between;
