@@ -47,6 +47,8 @@ p {
 }
 
 .info {
+    margin-left: 10px;
+    margin-right: 10px;
     font-size: 10px;
     display: flex;
     align-items: center;
