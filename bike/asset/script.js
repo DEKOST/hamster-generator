@@ -8,7 +8,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const keyContainer = document.getElementById('keyContainer');
-    const generatedKeys = document.getElementById('generatedKeys');
+    const keysList = document.getElementById('keysList');
     const keyCount = parseInt(document.getElementById('keyCountSelect').value);
 
     // Reset UI for new generation
@@ -16,7 +16,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     progressText.innerText = '0%';
     progressContainer.classList.remove('hidden');
     keyContainer.classList.add('hidden');
-    generatedKeys.innerText = '';
+    keysList.innerHTML = ''; // Очищаем список ключей перед новой генерацией
 
     startBtn.disabled = true;
 
@@ -59,15 +59,32 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 
     const keys = await Promise.all(Array.from({ length: keyCount }, generateKeyProcess));
 
-    generatedKeys.innerText = keys.filter(key => key).join('\n');
-    keyContainer.classList.remove('hidden');
+    keys.filter(key => key).forEach((key, index) => {
+        const keyItem = document.createElement('div');
+        keyItem.classList.add('key-item');
 
+        const keyText = document.createElement('p');
+        keyText.innerText = key;
+        keyText.id = `key-${index}`;
+
+        const copyBtn = document.createElement('button');
+        copyBtn.innerText = 'Копировать';
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(key).then(() => {
+                alert(`Ключ ${index + 1} скопирован: ${key}`);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+            });
+        });
+
+        keyItem.appendChild(keyText);
+        keyItem.appendChild(copyBtn);
+        keysList.appendChild(keyItem);
+    });
+
+    keyContainer.classList.remove('hidden');
     startBtn.disabled = false;
 });
-
-//document.getElementById('creatorChannelBtn').addEventListener('click', () => {
-//    window.location.href = 'https://t.me/hamster_key2024'; // Замените на URL вашего канала
-//});
 
 function generateClientId() {
     const timestamp = Date.now();

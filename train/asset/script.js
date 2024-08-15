@@ -2,13 +2,14 @@ const APP_TOKEN = '82647f43-3f87-402d-88dd-09a90025313f';
 const PROMO_ID = 'c4480ac7-e178-4973-8061-9ed5b2e17954';
 const EVENTS_DELAY = 120000;
 
+
 document.getElementById('startBtn').addEventListener('click', async () => {
     const startBtn = document.getElementById('startBtn');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const keyContainer = document.getElementById('keyContainer');
-    const generatedKeys = document.getElementById('generatedKeys');
+    const keysList = document.getElementById('keysList');
     const keyCount = parseInt(document.getElementById('keyCountSelect').value);
 
     // Reset UI for new generation
@@ -16,7 +17,7 @@ document.getElementById('startBtn').addEventListener('click', async () => {
     progressText.innerText = '0%';
     progressContainer.classList.remove('hidden');
     keyContainer.classList.add('hidden');
-    generatedKeys.innerText = '';
+    keysList.innerHTML = ''; // Очищаем список ключей перед новой генерацией
 
     startBtn.disabled = true;
 
@@ -59,9 +60,30 @@ document.getElementById('startBtn').addEventListener('click', async () => {
 
     const keys = await Promise.all(Array.from({ length: keyCount }, generateKeyProcess));
 
-    generatedKeys.innerText = keys.filter(key => key).join('\n');
-    keyContainer.classList.remove('hidden');
+    keys.filter(key => key).forEach((key, index) => {
+        const keyItem = document.createElement('div');
+        keyItem.classList.add('key-item');
 
+        const keyText = document.createElement('p');
+        keyText.innerText = key;
+        keyText.id = `key-${index}`;
+
+        const copyBtn = document.createElement('button');
+        copyBtn.innerText = 'Копировать';
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(key).then(() => {
+                alert(`Ключ ${index + 1} скопирован: ${key}`);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+            });
+        });
+
+        keyItem.appendChild(keyText);
+        keyItem.appendChild(copyBtn);
+        keysList.appendChild(keyItem);
+    });
+
+    keyContainer.classList.remove('hidden');
     startBtn.disabled = false;
 });
 
